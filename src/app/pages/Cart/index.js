@@ -1,6 +1,6 @@
 import React from "react";
+import { connect } from "react-redux";
 import "./index.scss";
-import { connect } from "net";
 
 function Error() {
   return (
@@ -21,7 +21,7 @@ function CartHeader() {
     </div>
   );
 }
-function Total() {
+function Total(total) {
   return (
     <div className="Cart--total">
       <label>Total:</label> {total}
@@ -30,7 +30,7 @@ function Total() {
 }
 function CartRow({ name, count, price, currencySymbol }) {
   return (
-    <div key={id} className="Cart--item">
+    <div className="Cart--item">
       <span>
         {name} x {count}
       </span>
@@ -46,11 +46,11 @@ function Cart({ cart, total }) {
   return (
     <div className="Cart">
       {!cart.length && <Error />}
-      {!!cartItems.length && <CartHeader />}
+      {!!cart.length && <CartHeader />}
       {cart.map(item => (
         <CartRow {...item} key={item.id} />
       ))}
-      {!!cartItems.length && <Total total={total} />}
+      {!!cart.length && <Total total={total} />}
     </div>
   );
 }
