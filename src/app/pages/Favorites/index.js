@@ -19,8 +19,7 @@ function Favorites({ favorites, products = [], cart, ...restProps }) {
 
   return (
     <div className="Favorites">
-      {!favoriteProducts.length && 
-        }
+      {!favoriteProducts.length && <Error />}
       {favoriteProducts.map(data => {
         const { count = 0 } = cart.find(({ id }) => id === data.id) || {};
 
