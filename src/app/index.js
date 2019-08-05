@@ -18,15 +18,15 @@ import {
 
 import { Layout } from "./components";
 import { useFetch } from "./hooks";
-// import { toggleArrayItem } from "./util";
 import store from "./state";
 import { ROUTES } from "../constants";
+import shop from "../shop";
 
 function onError() {
   return "Ooops! Monkeys stole our products! 😱";
 }
 function onSuccess(payload) {
-  SourceBuffer.dispatch({ type: "SET_PRODUCTS", payload });
+  store.dispatch({ type: "SET_PRODUCTS", payload });
 
   return payload;
 }
@@ -35,7 +35,6 @@ function App() {
   const { loading: isLoading, products, error } = useFetch({
     onError,
     onSuccess,
-    setSuccess: json => json,
     src: "https://boiling-reaches-93648.herokuapp.com/food-shop/products",
     intinialState: [],
     dataKey: "products"

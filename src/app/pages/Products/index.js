@@ -1,38 +1,23 @@
-import React from 'react';
-import './index.scss';
-import { Loader, ProductCard } from '../../components';
+import React from "react";
+import { connect } from "react-redux";
+import "./index.scss";
+import { Loader, ProductCard } from "../../components";
+import shop from "../../../shop";
 
-function Products({
-  isLoading,
-  error,
-  products = [],
-  favorites,
-  cart,
-  toggleFavorite,
-  addToCart,
-  removeFromCart,
-}) {
+function Products({ isLoading, error, products = [] }) {
   return (
     <div className="Products">
       {isLoading && <Loader />}
       {error && <p>{error}</p>}
       {products.map(data => {
-        const { count = 0 } = cart.find(({ id }) => id === data.id) || {};
-
-        return (
-          <ProductCard
-            removeFromCart={removeFromCart}
-            toggleFavorite={toggleFavorite}
-            addToCart={addToCart}
-            {...data}
-            key={data.id}
-            isFavorite={favorites.includes(data.id)}
-            cartCount={count}
-          />
-        );
+        return <ProductCard {...data} key={data.id} />;
       })}
     </div>
   );
 }
 
-export default Products;
+function mapStateToProps(state) {
+  return { products: shop.selectors.getProducts(state) };
+}
+
+export default connect(mapStateToProps)(Products);

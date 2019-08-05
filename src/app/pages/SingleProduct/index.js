@@ -1,8 +1,10 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import './index.scss';
-import { ROUTES } from '../../../constants';
-import { Loader } from '../../components';
+import React from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import "./index.scss";
+import { ROUTES } from "../../../constants";
+import { Loader } from "../../components";
+import shop from "../../../shop";
 
 function SingleProduct({ history, product, isLoading }) {
   if (!product && !isLoading) {
@@ -31,4 +33,15 @@ function SingleProduct({ history, product, isLoading }) {
   );
 }
 
-export default SingleProduct;
+function mapStateToProps(
+  state,
+  {
+    match: {
+      params: { id }
+    }
+  }
+) {
+  return { product: shop.selectors.getProductById(state, id) };
+}
+
+export default connect(mapStateToProps)(SingleProduct);

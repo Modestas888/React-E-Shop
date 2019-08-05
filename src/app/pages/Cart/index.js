@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import "./index.scss";
+import shop from "../../../shop";
 
 function Error() {
   return (
@@ -21,7 +22,7 @@ function CartHeader() {
     </div>
   );
 }
-function Total(total) {
+function Total({ total }) {
   return (
     <div className="Cart--total">
       <label>Total:</label> {total}
@@ -56,17 +57,12 @@ function Cart({ cart, total }) {
 }
 
 function mapStateToProps(state) {
-  const { cart, products } = state.shop;
-  const cartItems = cart.map(item => {
-    const product = products.find(({ id }) => id === item.id);
-
-    return { ...product, ...item };
-  });
-  const total = cartItems.reduce(
+  const cart = shop.selectors.getCartProducts(state);
+  const total = cart.reduce(
     (result, { price, count }) => result + Number(price) * count,
     0
   );
-  return { cart: cartItems, total };
+  return { cart, total };
 }
 
 export default connect(mapStateToProps)(Cart);

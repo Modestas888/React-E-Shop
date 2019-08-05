@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './index.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./index.scss";
 
 function ProductCard({
   name,
@@ -13,9 +13,11 @@ function ProductCard({
   cartCount,
   toggleFavorite,
   addToCart,
-  removeFromCart,
+  removeFromCart
 }) {
-  const className = isFavorite ? 'ProductCard ProductCard__favorite' : 'ProductCard';
+  const className = isFavorite
+    ? "ProductCard ProductCard__favorite"
+    : "ProductCard";
 
   return (
     <div className={className}>
@@ -35,7 +37,7 @@ function ProductCard({
         <div>
           <button type="button" onClick={() => toggleFavorite(id)}>
             <span role="img" aria-label="add to favorites heart illustration">
-              {isFavorite ? '❌' : '💜'}
+              {isFavorite ? "❌" : "💜"}
             </span>
           </button>
           {!!cartCount && (
@@ -49,7 +51,9 @@ function ProductCard({
             <span role="img" aria-label="add to cart illustration">
               🛒
             </span>
-            {!!cartCount && <div className="ProductCard--cta-count">{cartCount}</div>}
+            {!!cartCount && (
+              <div className="ProductCard--cta-count">{cartCount}</div>
+            )}
           </button>
         </div>
       </div>
