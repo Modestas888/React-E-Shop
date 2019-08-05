@@ -1,6 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { compose, bindActionCreators } from "redux";
+import { Link, withRouter } from "react-router-dom";
 import "./index.scss";
+import { ROUTES } from "../../../constants";
+import shop from "../../../shop";
+
+//HOC(Higher Order Component) example
+function withHoc(Component) {
+  function WrappedComponent(props) {
+    return <Component {...props} text={"Amazing"} />;
+  }
+  return WrappedComponent;
+}
 
 function ProductCard({
   name,
@@ -13,11 +25,13 @@ function ProductCard({
   cartCount,
   toggleFavorite,
   addToCart,
-  removeFromCart
+  removeFromCart,
+  history
 }) {
   const className = isFavorite
     ? "ProductCard ProductCard__favorite"
     : "ProductCard";
+  const completePurchase = () => history.push(ROUTES.cart);
 
   return (
     <div className={className}>
@@ -55,10 +69,41 @@ function ProductCard({
               <div className="ProductCard--cta-count">{cartCount}</div>
             )}
           </button>
+          <button type="button" onClick="completePurchase">
+            {""}
+            Complete Purchase{""}
+          </button>
         </div>
       </div>
     </div>
   );
 }
+function mapStateToProps(state, { id }) {
+  const item = shop.selectors.getCartItem(state, id);
 
-export default ProductCard;
+  return {
+    cartCount: item ? item.count : 0,
+    isFavorite: shop.selectors.isProductFavorite(state, id)
+  };
+}
+
+function mapDispatchToProps(dispatch, { id }) {
+  return bindActionCreators({
+    addToCart: shop.actions.addToCart,
+    dispatch,
+    removeFromCart: shop.actions.removeFromCart,
+    dispatch,
+    toggleFavorite: shop.actions.toggleFavorite,
+    dispatch
+  });
+}
+const enchance = compose(
+  withHoc,
+  withRouter,
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )
+);
+
+export default enchance(ProductCard);

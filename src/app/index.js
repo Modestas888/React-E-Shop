@@ -5,7 +5,6 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-
 import { Provider } from "react-redux";
 
 import {
@@ -15,7 +14,6 @@ import {
   Favorites,
   SingleProduct
 } from "./pages";
-
 import { Layout } from "./components";
 import { useFetch } from "./hooks";
 import store from "./state";
@@ -23,10 +21,11 @@ import { ROUTES } from "../constants";
 import shop from "../shop";
 
 function onError() {
-  return "Ooops! Monkeys stole our products! 😱";
+  return "Ooops! Monkeys stole our products! 😱👟";
 }
+
 function onSuccess(payload) {
-  store.dispatch({ type: "SET_PRODUCTS", payload });
+  store.dispatch(shop.actions.SingleProduct(payload));
 
   return payload;
 }
@@ -36,9 +35,10 @@ function App() {
     onError,
     onSuccess,
     src: "https://boiling-reaches-93648.herokuapp.com/food-shop/products",
-    intinialState: [],
+    initialState: [],
     dataKey: "products"
   });
+
   return (
     <Provider store={store}>
       <Router>
@@ -49,22 +49,14 @@ function App() {
               exact
               render={() => <Products isLoading={isLoading} error={error} />}
             />
-            <Route path={ROUTES.cart} exact component={Cart} />}
+            <Route path={ROUTES.cart} exact component={Cart} />
             <Route path={ROUTES.favorites} exact component={Favorites} />
             <Route
               path={ROUTES.product}
               exact
-              render={props => {
-                const { id } = props.match.params;
-                const product = products.find(product => product.id === id);
-                return (
-                  <SingleProduct
-                    {...props}
-                    product={product}
-                    isLoading={isLoading}
-                  />
-                );
-              }}
+              render={props => (
+                <SingleProduct {...props} isLoading={isLoading} />
+              )}
             />
             <Redirect exact from={ROUTES.home} to={ROUTES.defaultPage} />
             <Route component={PageNotFound} />
@@ -74,4 +66,5 @@ function App() {
     </Provider>
   );
 }
+
 export default App;
