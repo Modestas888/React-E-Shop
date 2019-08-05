@@ -6,11 +6,12 @@ import "./index.scss";
 import { ROUTES } from "../../../constants";
 import shop from "../../../shop";
 
-//HOC(Higher Order Component) example
+// HOC(Higher Order Component) example
 function withHoc(Component) {
   function WrappedComponent(props) {
     return <Component {...props} text={"Amazing"} />;
   }
+
   return WrappedComponent;
 }
 
@@ -26,7 +27,8 @@ function ProductCard({
   toggleFavorite,
   addToCart,
   removeFromCart,
-  history
+  history,
+  text
 }) {
   const className = isFavorite
     ? "ProductCard ProductCard__favorite"
@@ -61,7 +63,10 @@ function ProductCard({
               </span>
             </button>
           )}
-          <button type="button" onClick={() => addToCart(id)}>
+          <button
+            type="button"
+            onClick={() => addToCart({ id, count: cartCount + 1 })}
+          >
             <span role="img" aria-label="add to cart illustration">
               🛒
             </span>
@@ -69,41 +74,37 @@ function ProductCard({
               <div className="ProductCard--cta-count">{cartCount}</div>
             )}
           </button>
-          <button type="button" onClick="completePurchase">
-            {""}
-            Complete Purchase{""}
+          <button type="button" onClick={completePurchase}>
+            {text}
           </button>
         </div>
       </div>
     </div>
   );
 }
-function mapStateToProps(state, { id }) {
-  const item = shop.selectors.getCartItem(state, id);
 
-  return {
-    cartCount: item ? item.count : 0,
-    isFavorite: shop.selectors.isProductFavorite(state, id)
-  };
-}
-
-function mapDispatchToProps(dispatch, { id }) {
-  return bindActionCreators({
-    addToCart: shop.actions.addToCart,
-    dispatch,
-    removeFromCart: shop.actions.removeFromCart,
-    dispatch,
-    toggleFavorite: shop.actions.toggleFavorite,
-    dispatch
-  });
-}
-const enchance = compose(
+const enhance = compose(
   withHoc,
   withRouter,
   connect(
-    mapStateToProps,
-    mapDispatchToProps
+    (state, { id }) => {
+      const item = shop.selectors.getCartItem(state, id);
+
+      return {
+        cartCount: item ? item.count : 0,
+        isFavorite: shop.selectors.isProductFavorite(state, id)
+      };
+    },
+    dispatch =>
+      bindActionCreators(
+        {
+          addToCart: shop.actions.addToCart,
+          removeFromCart: shop.actions.removeFromCart,
+          toggleFavorite: shop.actions.toggleFavorite
+        },
+        dispatch
+      )
   )
 );
 
-export default enchance(ProductCard);
+export default enhance(ProductCard);
