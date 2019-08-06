@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
+// import { Redirect } from "react-router-dom";
 import "./index.scss";
 import { ROUTES } from "../../../constants";
 import { Loader } from "../../components";
+import { usePrevious } from "../../hook";
 import shop from "../../../shop";
 
-function SingleProduct({ history, product, isLoading }) {
-  if (!product && !isLoading) {
-    return <Redirect to={ROUTES.defaultPage} />;
-  }
-
+function SingleProduct({ history, product, isLoading, error }) {
+  const prevLoading = usePrevious(isLoading);
+  useEffect(() => {
+    if (prevLoading && !isLoading && (error || !Object.keys(product).length))
+      history.replace(ROUTES.defaultPage);
+  }, [error, history, isLoading, prevLoading, product]);
   if (isLoading) {
     return <Loader />;
   }
-
   const { name, image, description, price, currencySymbol } = product;
   const onClick = () => history.push(ROUTES.cart);
 
@@ -32,16 +33,23 @@ function SingleProduct({ history, product, isLoading }) {
     </div>
   );
 }
-
-function mapStateToProps(
-  state,
-  {
-    match: {
-      params: { id }
-    }
-  }
-) {
-  return { product: shop.selectors.getProductById(state, id) };
-}
-
-export default connect(mapStateToProps)(SingleProduct);
+// function mapStateToProps(
+//   state,
+//   {
+//     match: {
+//       params: { id },
+//     },
+//   },
+// ) {
+//   //is state.shop visas produktu sarasas
+//   // const { products } = state.shop;
+//   //produkto id gaunam ir lyginam su paspaustu produkto id//id gaunasm ir routu produkts// params url yra
+//   // const product = products.find(({ id }) => id === params.id);
+//   return { product: shop.selectors.getProductById(state, id) };
+// }
+const enhance = connect((state, { match: { params } }) => ({
+  product: shop.selectors.getProductById(state, params.id) || {},
+  error: shop.selectors.getProductsError(state),
+  isLoading: shop.selectors.isLoadingProducts(state)
+}));
+export default enhance(SingleProduct);

@@ -1,3 +1,4 @@
+import { API } from "../constants";
 import * as types from "./actionTypes";
 
 export const removeFromCart = id => ({
@@ -18,4 +19,18 @@ export const setProducts = payload => ({
   type: types.SET_PRODUCTS,
   payload
 });
+export const getProducts = () => async dispatch => {
+  dispatch({ type: types.GET_PRODUCTS });
+  try {
+    const result = await fetch(API.getProducts);
+    const json = await result.json();
+
+    dispatch({ type: types.GET_PRODUCTS_SUCCES, payload: json });
+  } catch (error) {
+    dispatch({
+      type: types.GET_PRODUCTS_FAILURE,
+      payload: "Ooops! MOnkeys stole our products! "
+    });
+  }
+};
 // pavadinimai turi sutapti su ProductCard oavadinimasi

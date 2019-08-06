@@ -14,7 +14,6 @@ function Error() {
     </p>
   );
 }
-
 function Favorites({ favorites, ...restProps }) {
   return (
     <div className="Favorites">
@@ -25,9 +24,7 @@ function Favorites({ favorites, ...restProps }) {
     </div>
   );
 }
-
 function mapStateToProps(state) {
   return { favorites: shop.selectors.getFavoriteProducts(state) };
 }
-
 export default connect(mapStateToProps)(Favorites);

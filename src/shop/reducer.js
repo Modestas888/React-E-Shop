@@ -1,5 +1,10 @@
 import * as actionTypes from "./actionTypes";
 import { toggleArrayItem } from "../util";
+const INITIAL_PRODUCTS_STATE = {
+  data: [],
+  error: null,
+  loading: false
+};
 
 const INITIAL_STATE = {
   products: [],
@@ -9,8 +14,22 @@ const INITIAL_STATE = {
 
 function reducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-    case actionTypes.SET_PRODUCTS:
-      return { ...state, products: payload };
+    case actionTypes.GET_PRODUCTS:
+      return {
+        ...state,
+        products: { ...INITIAL_PRODUCTS_STATE, loading: true }
+      };
+    case actionTypes.GET_PRODUCTS_SUCCES:
+      return {
+        ...state,
+        products: { ...INITIAL_PRODUCTS_STATE, data: payload }
+      };
+    case actionTypes.GET_PRODUCTS_FAILURE:
+      return {
+        ...state,
+        products: { ...INITIAL_PRODUCTS_STATE, error: payload }
+      };
+
     case actionTypes.ADD_TO_CART:
       const itemIndex = state.cart.findIndex(({ id }) => id === payload.id);
 
