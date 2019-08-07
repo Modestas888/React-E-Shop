@@ -1,6 +1,7 @@
 import React from "react";
 import "./index.scss";
 import { ProductCard } from "../../components";
+
 function Error() {
   return (
     <p>
@@ -11,19 +12,15 @@ function Error() {
     </p>
   );
 }
-
 function Favorites({ favorites, products = [], cart, ...restProps }) {
   const favoriteProducts = products.filter(product =>
     favorites.includes(product.id)
   );
-
   return (
     <div className="Favorites">
-      {!favoriteProducts.length && 
-        }
+      {!favoriteProducts.length && <Error />}
       {favoriteProducts.map(data => {
         const { count = 0 } = cart.find(({ id }) => id === data.id) || {};
-
         return (
           <ProductCard
             {...restProps}
@@ -37,5 +34,4 @@ function Favorites({ favorites, products = [], cart, ...restProps }) {
     </div>
   );
 }
-
 export default Favorites;

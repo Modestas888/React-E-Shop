@@ -5,6 +5,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
+
 import {
   Products,
   PageNotFound,
@@ -14,29 +15,30 @@ import {
 } from "./pages";
 import { Layout } from "./components";
 import { useFetch } from "./hooks";
+import { toggleArrayItem } from "./util";
 import { ROUTES } from "../constants";
-// import { async } from 'q';
 
 function onError() {
-  return "Ooops! Monkeys stole our products! 😱";
+  return "Ooops! Monkeys stole our products! 😱👟";
 }
 
 function App() {
   const [favorites, setFavorites] = useState([]);
   const [cart, setCart] = useState([]);
-  const { loading: isLoading, data: products, error } = useFetch({
+  const { loading: isLoading, products, error } = useFetch({
     onError,
-    setSuccess: json => json,
     src: "https://boiling-reaches-93648.herokuapp.com/food-shop/products",
-    intinialState: [],
+    initialState: [],
     dataKey: "products"
   });
 
   const toggleFavorite = id => {
     setFavorites(toggleArrayItem(favorites, id));
   };
+
   const addToCart = id => {
     const itemIndex = cart.findIndex(item => item.id === id);
+
     if (itemIndex > -1) {
       setCart(
         cart.map((item, i) =>
@@ -47,6 +49,7 @@ function App() {
       setCart([...cart, { id, count: 1 }]);
     }
   };
+
   const removeFromCart = id => {
     setCart(cart.filter(item => item.id !== id));
   };
@@ -96,6 +99,7 @@ function App() {
             render={props => {
               const { id } = props.match.params;
               const product = products.find(product => product.id === id);
+
               return (
                 <SingleProduct
                   {...props}
@@ -112,4 +116,5 @@ function App() {
     </Router>
   );
 }
+
 export default App;
