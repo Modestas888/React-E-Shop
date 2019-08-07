@@ -15,7 +15,7 @@ function Products({ isLoading, error, products }) {
     </div>
   );
 }
-
+// weweew
 const enhance = connect(state => ({
   products: shop.selectors.getProducts(state),
   error: shop.selectors.getProductsError(state),
