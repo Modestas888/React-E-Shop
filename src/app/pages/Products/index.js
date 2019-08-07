@@ -16,13 +16,10 @@ function Products({ isLoading, error, products }) {
   );
 }
 
-function mapStateToProps(state) {
-  return { products: shop.selectors.getProducts(state) };
-}
 const enhance = connect(state => ({
   products: shop.selectors.getProducts(state),
   error: shop.selectors.getProductsError(state),
   isLoading: shop.selectors.isLoadingProducts(state)
 }));
 
-export default connect(mapStateToProps)(Products);
+export default enhance(Products);

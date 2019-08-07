@@ -15,22 +15,27 @@ export const addToCart = payload => ({
   type: types.ADD_TO_CART,
   payload
 });
+
 export const setProducts = payload => ({
   type: types.SET_PRODUCTS,
   payload
 });
+
 export const getProducts = () => async dispatch => {
+  let finalFinal = null;
   dispatch({ type: types.GET_PRODUCTS });
+
   try {
     const result = await fetch(API.getProducts);
-    const json = await result.json();
+    finalFinal = await result.json();
 
-    dispatch({ type: types.GET_PRODUCTS_SUCCES, payload: json });
+    dispatch({ type: types.GET_PRODUCTS_SUCCESS, payload: finalFinal });
   } catch (error) {
     dispatch({
       type: types.GET_PRODUCTS_FAILURE,
-      payload: "Ooops! MOnkeys stole our products! "
+      payload: "Ooops! Monkeys stole our products! 😱👟"
     });
   }
+
+  return finalFinal;
 };
-// pavadinimai turi sutapti su ProductCard oavadinimasi

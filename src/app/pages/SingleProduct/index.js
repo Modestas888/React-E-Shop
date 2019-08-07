@@ -1,18 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-// import { Redirect } from "react-router-dom";
 import "./index.scss";
-import { ROUTES } from "../../../constants";
 import { Loader } from "../../components";
-import { usePrevious } from "../../hook";
+import { usePrevious } from "../../hooks";
+import { ROUTES } from "../../../constants";
 import shop from "../../../shop";
 
 function SingleProduct({ history, product, isLoading, error }) {
   const prevLoading = usePrevious(isLoading);
   useEffect(() => {
-    if (prevLoading && !isLoading && (error || !Object.keys(product).length))
+    if (prevLoading && !isLoading && (error || !Object.keys(product).length)) {
       history.replace(ROUTES.defaultPage);
+    }
   }, [error, history, isLoading, prevLoading, product]);
+
   if (isLoading) {
     return <Loader />;
   }
@@ -21,7 +22,7 @@ function SingleProduct({ history, product, isLoading, error }) {
 
   return (
     <div className="SingleProduct">
-      <img src={image} alt={`product: ${name}`} />
+      {image && <img src={image} alt={`product: ${name}`} />}
       <p>
         {name} - {price}
         {currencySymbol}
@@ -33,23 +34,11 @@ function SingleProduct({ history, product, isLoading, error }) {
     </div>
   );
 }
-// function mapStateToProps(
-//   state,
-//   {
-//     match: {
-//       params: { id },
-//     },
-//   },
-// ) {
-//   //is state.shop visas produktu sarasas
-//   // const { products } = state.shop;
-//   //produkto id gaunam ir lyginam su paspaustu produkto id//id gaunasm ir routu produkts// params url yra
-//   // const product = products.find(({ id }) => id === params.id);
-//   return { product: shop.selectors.getProductById(state, id) };
-// }
+
 const enhance = connect((state, { match: { params } }) => ({
   product: shop.selectors.getProductById(state, params.id) || {},
   error: shop.selectors.getProductsError(state),
   isLoading: shop.selectors.isLoadingProducts(state)
 }));
+
 export default enhance(SingleProduct);

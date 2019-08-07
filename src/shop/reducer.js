@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import { toggleArrayItem } from "../util";
+
 const INITIAL_PRODUCTS_STATE = {
   data: [],
   error: null,
@@ -19,7 +20,7 @@ function reducer(state = INITIAL_STATE, { type, payload }) {
         ...state,
         products: { ...INITIAL_PRODUCTS_STATE, loading: true }
       };
-    case actionTypes.GET_PRODUCTS_SUCCES:
+    case actionTypes.GET_PRODUCTS_SUCCESS:
       return {
         ...state,
         products: { ...INITIAL_PRODUCTS_STATE, data: payload }
