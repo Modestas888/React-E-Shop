@@ -1,6 +1,7 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import './index.scss';
+import React from "react";
+import { Link } from "react-router-dom";
+import "./index.scss";
+import { withBackgroundColor } from "../BackgroundContext";
 
 function ProductCard({
   name,
@@ -14,11 +15,14 @@ function ProductCard({
   toggleFavorite,
   addToCart,
   removeFromCart,
+  background
 }) {
-  const className = isFavorite ? 'ProductCard ProductCard__favorite' : 'ProductCard';
+  const className = isFavorite
+    ? "ProductCard ProductCard__favorite"
+    : "ProductCard";
 
   return (
-    <div className={className}>
+    <div style={{ background }} className={className}>
       <div className="ProductCard--image">
         <img alt={`product: ${name}`} src={image} />
       </div>
@@ -35,7 +39,7 @@ function ProductCard({
         <div>
           <button type="button" onClick={() => toggleFavorite(id)}>
             <span role="img" aria-label="add to favorites heart illustration">
-              {isFavorite ? '❌' : '💜'}
+              {isFavorite ? "❌" : "💜"}
             </span>
           </button>
           {!!cartCount && (
@@ -49,7 +53,9 @@ function ProductCard({
             <span role="img" aria-label="add to cart illustration">
               🛒
             </span>
-            {!!cartCount && <div className="ProductCard--cta-count">{cartCount}</div>}
+            {!!cartCount && (
+              <div className="ProductCard--cta-count">{cartCount}</div>
+            )}
           </button>
         </div>
       </div>
@@ -57,4 +63,4 @@ function ProductCard({
   );
 }
 
-export default ProductCard;
+export default withBackgroundColor(ProductCard);
