@@ -1,3 +1,4 @@
+import { RSAA } from "redux-api-middleware";
 import { API } from "../constants";
 import * as types from "./actionTypes";
 
@@ -21,21 +22,38 @@ export const setProducts = payload => ({
   payload
 });
 
-export const getProducts = () => async dispatch => {
-  let finalFinal = null;
-  dispatch({ type: types.GET_PRODUCTS });
+// export const getProducts = () => async dispatch => {
+//   let finalFinal = null;
+//   dispatch({ type: types.GET_PRODUCTS });
 
-  try {
-    const result = await fetch(API.getProducts);
-    finalFinal = await result.json();
+//   try {
+//     const result = await fetch(API.getProducts);
+//     finalFinal = await result.json();
 
-    dispatch({ type: types.GET_PRODUCTS_SUCCESS, payload: finalFinal });
-  } catch (error) {
-    dispatch({
-      type: types.GET_PRODUCTS_FAILURE,
-      payload: "Ooops! Monkeys stole our products! 😱👟"
-    });
+//     dispatch({ type: types.GET_PRODUCTS_SUCCESS, payload: finalFinal });
+//   } catch (error) {
+//     dispatch({
+//       type: types.GET_PRODUCTS_FAILURE,
+//       payload: "Ooops! Monkeys stole our products! 😱👟"
+//     });
+//   }
+
+//   return finalFinal;
+// };
+
+export const getProducts = () => ({
+  [RSAA]: {
+    endpoint: API.getProducts,
+    method: "GET",
+    types: [
+      types.GET_PRODUCTS,
+      types.GET_PRODUCTS_SUCCESS,
+      {
+        type: types.GET_PRODUCTS_FAILURE,
+        payload: "OOOOOps! Monkjeys Stole our Products !!"
+      }
+    ]
   }
+});
 
-  return finalFinal;
-};
+// funkcija kitokia su apiMiggleware supusinta 3 skirtingi kodai

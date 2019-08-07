@@ -8,7 +8,7 @@ const INITIAL_PRODUCTS_STATE = {
 };
 
 const INITIAL_STATE = {
-  products: [],
+  products: INITIAL_PRODUCTS_STATE,
   favorites: [],
   cart: []
 };
