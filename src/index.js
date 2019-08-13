@@ -1,7 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'reset-css';
-import './index.scss';
-import App from './app';
-
-ReactDOM.render(<App />, document.getElementById('root'));
+export const ROUTES = {
+    defaultPage: '/',
+    home: '/home',
+    cart: '/cart',
+    favorites: '/favorites',
+    product: '/product/:id',
+  };
+  
+  export const API_ENDPOINTS = {
+    getProducts: 'https://boiling-reaches-93648.herokuapp.com/food-shop/products',
+  };
