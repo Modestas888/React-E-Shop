@@ -1,20 +1,9 @@
-import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
-import {
-  Products,
-  PageNotFound,
-  Cart,
-  Favorites,
-  SingleProduct
-} from "./pages";
-import { Layout, BackgroundColorProvider, ShopProvider } from "./components";
-import { ROUTES } from "../constants";
+import { Products, PageNotFound, Cart, Favorites, SingleProduct } from './pages';
+import { Layout, BackgroundColorProvider, ShopProvider } from './components';
+import { ROUTES } from '../constants';
 
 function App() {
   return (

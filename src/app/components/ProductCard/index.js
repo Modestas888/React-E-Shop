@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
-import "./index.scss";
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import './index.scss';
 // import { withBackgroundColor } from '../BackgroundContext';
-import BackgroundContext from "../BackgroundContext";
-import ShopContext from "../ShopContext";
+import BackgroundContext from '../BackgroundContext';
+import ShopContext from '../ShopContext';
 
 function ProductCard({
   name,
@@ -11,27 +11,18 @@ function ProductCard({
   description,
   price,
   currencySymbol,
-  id
+  id,
   // background,
   // setBackground,
 }) {
-  const {
-    removeFromCart,
-    toggleFavorite,
-    addToCart,
-    favorites,
-    cart
-  } = useContext(ShopContext);
+  const { removeFromCart, toggleFavorite, addToCart, favorites, cart } = useContext(ShopContext);
   const isFavorite = favorites.some(itemId => itemId === id);
   const cartIndex = cart.findIndex(item => item.id === id);
   const cartCount = cartIndex > -1 ? cart[cartIndex].count : 0;
-  const className = isFavorite
-    ? "ProductCard ProductCard__favorite"
-    : "ProductCard";
+  const className = isFavorite ? 'ProductCard ProductCard__favorite' : 'ProductCard';
 
   const { background, setBackground } = useContext(BackgroundContext);
-  const randomColor = () =>
-    setBackground("#" + ((Math.random() * 0xffffff) << 0).toString(16));
+  const randomColor = () => setBackground('#' + ((Math.random() * 0xffffff) << 0).toString(16));
 
   return (
     <div style={{ background }} className={className}>
@@ -51,7 +42,7 @@ function ProductCard({
         <div>
           <button type="button" onClick={() => toggleFavorite(id)}>
             <span role="img" aria-label="add to favorites heart illustration">
-              {isFavorite ? "❌" : "💜"}
+              {isFavorite ? '❌' : '💜'}
             </span>
           </button>
           {!!cartCount && (
@@ -65,9 +56,7 @@ function ProductCard({
             <span role="img" aria-label="add to cart illustration">
               🛒
             </span>
-            {!!cartCount && (
-              <div className="ProductCard--cta-count">{cartCount}</div>
-            )}
+            {!!cartCount && <div className="ProductCard--cta-count">{cartCount}</div>}
           </button>
           <button type="button" onClick={randomColor}>
             Change Color

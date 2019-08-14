@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-const BackgroundContext = React.createContext("blue");
+const BackgroundContext = React.createContext('blue');
 
 function withBackgroundColor(Component) {
   function WrappedComponent(props) {
@@ -15,7 +15,7 @@ function withBackgroundColor(Component) {
 }
 
 function BackgroundColorProvider({ children }) {
-  const [background, setBackground] = useState("salmon");
+  const [background, setBackground] = useState('salmon');
 
   return (
     <BackgroundContext.Provider value={{ background, setBackground }}>

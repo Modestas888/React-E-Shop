@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
-import "./index.scss";
-import { Loader, ProductCard, ShopContext } from "../../components";
+import React, { useContext } from 'react';
+import './index.scss';
+import { Loader, ProductCard, ShopContext } from '../../components';
 
 function Products() {
   const { products, error, loading } = useContext(ShopContext);

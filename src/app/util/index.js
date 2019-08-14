@@ -1,1 +1,1 @@
-export { default as toggleArrayItem } from "./toggleArrayItem";
+export { default as toggleArrayItem } from './toggleArrayItem';

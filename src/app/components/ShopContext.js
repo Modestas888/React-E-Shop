@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import { useFetch } from "../hooks";
-import { API_ENDPOINTS } from "../../constants";
-import { toggleArrayItem } from "../util";
+import React, { useState } from 'react';
+import { useFetch } from '../hooks';
+import { API_ENDPOINTS } from '../../constants';
+import { toggleArrayItem } from '../util';
 
 const DEFAULT_SHOP_CONTEXT = {
   products: [],
   loading: false,
-  error: null
+  error: null,
 };
 
 const ShopContext = React.createContext(DEFAULT_SHOP_CONTEXT);
 
 function onError() {
-  return "Ooops! Monkeys stole our products! 😱👟";
+  return 'Ooops! Monkeys stole our products! 😱👟';
 }
 
 function ShopProvider({ children }) {
@@ -27,11 +27,7 @@ function ShopProvider({ children }) {
     const itemIndex = cart.findIndex(item => item.id === id);
 
     if (itemIndex > -1) {
-      setCart(
-        cart.map((item, i) =>
-          i === itemIndex ? { ...item, count: item.count + 1 } : item
-        )
-      );
+      setCart(cart.map((item, i) => (i === itemIndex ? { ...item, count: item.count + 1 } : item)));
     } else {
       setCart([...cart, { id, count: 1 }]);
     }
@@ -44,8 +40,8 @@ function ShopProvider({ children }) {
   const { products, loading, error } = useFetch({
     src: API_ENDPOINTS.getProducts,
     initialState: DEFAULT_SHOP_CONTEXT.products,
-    dataKey: "products",
-    onError
+    dataKey: 'products',
+    onError,
   });
 
   return (
@@ -58,7 +54,7 @@ function ShopProvider({ children }) {
         error,
         removeFromCart,
         addToCart,
-        toggleFavorite
+        toggleFavorite,
       }}
     >
       {children}

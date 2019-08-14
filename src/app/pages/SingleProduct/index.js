@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
-import { Redirect } from "react-router-dom";
-import "./index.scss";
-import { ROUTES } from "../../../constants";
-import { Loader, ShopContext } from "../../components";
+import React, { useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import './index.scss';
+import { ROUTES } from '../../../constants';
+import { Loader, ShopContext } from '../../components';
 
 function SingleProduct({ history, match }) {
   const { products, loading } = useContext(ShopContext);
