@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Register</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style/topbar.scss" />
+    <link rel="stylesheet" href="style/signUp.scss" />
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="container">
+        <nav class="nav-bar left">
+          <span class="logo">E-SHOP</span>
+        </nav>
+        <nav class="nav-bar right">
+          <div>
+            <button type="button" name="button" class="btn log" id="register">
+              Register
+            </button>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="signUpForm">
+        <form>
+          <div class="form-group">
+            <label for="userName">Username</label>
+            <input type="text" class="form-control" id="userName" />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control" id="password" />
+          </div>
+          <button type="button" class="btn btn-primary" id="login">
+            Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript" src="js/login.js"></script>
+</html>

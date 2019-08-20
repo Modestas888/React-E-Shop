@@ -30,7 +30,8 @@
       display: inline-block;
       transition: all 0.3s;
 
-      &:hover, &.active {
+      &:hover,
+      &.active {
         background: #ffffff;
         color: #2e802e;
       }
